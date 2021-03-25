@@ -71,6 +71,9 @@ func (b *BalanceHandler) AddBalance(c *fiber.Ctx) (e error) {
 	if len(newBal.Type) == 0 || len(newBal.Name) == 0 {
 		return c.SendStatus(http.StatusBadRequest)
 	}
+	if newBal.Balance < 0 {
+		return c.SendStatus(http.StatusBadRequest)
+	}
 	newBalanceRow := &Balance{
 		Email:   sessionDetails.Email,
 		Type:    newBal.Type,
